@@ -12,3 +12,15 @@
 
 (defun dump-db-short ()
   (format t "~{~{~a:~10t~a~%~}~%~}" *db*))
+
+(defun prompt-read (prompt)
+  (format *query-io* "~a: " prompt)
+  (force-output *query-io*)
+  (read-line *query-io*))
+
+(defun prompt-for-cd ()
+  (make-cd
+   (prompt-read "Title")
+   (prompt-read "Artist")
+   (or (parse-integer (prompt-read "Rating") :junk-allowed t) 0)
+   (y-or-n-p "Ripped [y/n]")))
